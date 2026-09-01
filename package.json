@@ -1,0 +1,8 @@
+{
+  "name": "food-delivery-app",
+  "version": "2.4.0",
+  "scripts": {
+    "test": "pytest tests/",
+    "build": "docker build -t food-delivery-app ."
+  }
+}
