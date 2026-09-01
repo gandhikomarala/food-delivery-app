@@ -17,7 +17,7 @@ BiteRush Gourmet — Artisanal Culinary Logistics Platform is a production-grade
 
 ### 1. Set Up Python Virtual Environment
 ```bash
-git clone gandhikomarala/food-delivery-app.git
+git clone git@github.com:gandhikomarala/food-delivery-app.git
 cd food-delivery-app
 python -m venv venv
 # Windows:
