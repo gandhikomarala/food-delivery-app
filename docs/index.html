@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteRush — Artisan Dining & Express Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+    body { background: #fafafa; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .brand { font-size: 24px; font-weight: 900; color: #ea580c; display: flex; align-items: center; gap: 8px; }
+    .cart-btn { background: #ea580c; color: #fff; padding: 10px 24px; border-radius: 30px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35); }
+    .hero { background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); padding: 48px 48px; border-bottom: 1px solid #fed7aa; }
+    .hero-content { max-width: 1300px; margin: 0 auto; }
+    .hero h1 { font-size: 38px; font-weight: 900; color: #7c2d12; }
+    .cat-chips { display: flex; gap: 12px; margin-top: 20px; overflow-x: auto; }
+    .chip { background: #ffffff; border: 1.5px solid #fdba74; padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 14px; color: #9a3412; cursor: pointer; }
+    .chip.active { background: #ea580c; color: #ffffff; border-color: #ea580c; }
+    .layout { max-width: 1300px; margin: 36px auto; width: 100%; padding: 0 24px; display: grid; grid-template-columns: 1fr 380px; gap: 36px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+    .dish-card { background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: transform 0.2s; }
+    .dish-card:hover { transform: translateY(-4px); }
+    .dish-img { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 64px; }
+    .dish-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .dish-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .dish-desc { font-size: 13px; color: #64748b; margin-top: 6px; flex: 1; line-height: 1.4; }
+    .dish-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .dish-price { font-size: 20px; font-weight: 900; color: #ea580c; }
+    .btn-add-item { background: #0f172a; color: #fff; border: none; padding: 8px 18px; border-radius: 20px; font-weight: 700; cursor: pointer; }
+    .order-sidebar { background: #ffffff; border-radius: 24px; border: 1px solid #e2e8f0; padding: 28px; box-shadow: 0 4px 25px rgba(0,0,0,0.06); height: fit-content; }
+    .order-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; font-size: 14px; font-weight: 600; }
+    .btn-checkout { width: 100%; background: #16a34a; color: #fff; border: none; padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 20px; }
+    .live-tracker { background: #0f172a; color: #fff; border-radius: 16px; padding: 20px; margin-top: 20px; display: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="brand">🍕 BITERUSH GOURMET</div>
+    <button class="cart-btn">Your Order (<span id="cart-count">0</span>)</button>
+  </nav>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Handcrafted Culinary Delights</h1>
+      <p style="color:#9a3412; font-size:15px; margin-top:4px;">Delivered direct from executive kitchens within 25 minutes.</p>
+      <div class="cat-chips">
+        <div class="chip active">🔥 Trending</div>
+        <div class="chip">Woodfired Pizzas</div>
+        <div class="chip">Japanese Omakase</div>
+        <div class="chip">Organic Bowls</div>
+        <div class="chip">Artisan Burgers</div>
+      </div>
+    </div>
+  </div>
+  <div class="layout">
+    <div class="menu-grid">
+      <div class="dish-card">
+        <div class="dish-img" style="background:#ffedd5;">🍕</div>
+        <div class="dish-body">
+          <div class="dish-title">Black Truffle Margherita</div>
+          <div class="dish-desc">48-hour fermented dough, San Marzano tomatoes, fresh burrata, shaved black summer truffles.</div>
+          <div class="dish-footer">
+            <div class="dish-price">$21.50</div>
+            <button class="btn-add-item" onclick="addItem('Black Truffle Margherita', 21.50)">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="dish-card">
+        <div class="dish-img" style="background:#e0e7ff;">🍣</div>
+        <div class="dish-body">
+          <div class="dish-title">Hamachi & Salmon Nigiri Box</div>
+          <div class="dish-desc">Wild-caught yellowtail, King salmon, fresh wasabi root, and seasoned Koshihikari sushi rice.</div>
+          <div class="dish-footer">
+            <div class="dish-price">$26.00</div>
+            <button class="btn-add-item" onclick="addItem('Hamachi & Salmon Nigiri Box', 26.00)">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="dish-card">
+        <div class="dish-img" style="background:#dcfce7;">🥗</div>
+        <div class="dish-body">
+          <div class="dish-title">Avocado Tahini Superbowl</div>
+          <div class="dish-desc">Hass avocados, baby kale, roasted heirloom squash, pomegranate pearls, lemon garlic tahini.</div>
+          <div class="dish-footer">
+            <div class="dish-price">$16.00</div>
+            <button class="btn-add-item" onclick="addItem('Avocado Tahini Superbowl', 16.00)">+ Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="dish-card">
+        <div class="dish-img" style="background:#fee2e2;">🍔</div>
+        <div class="dish-body">
+          <div class="dish-title">Wagyu Smash Burger</div>
+          <div class="dish-desc">A5 Miyazaki Wagyu blend, aged gruyère cheese, smoked bacon jam, brioche bun with rosemary fries.</div>
+          <div class="dish-footer">
+            <div class="dish-price">$19.75</div>
+            <button class="btn-add-item" onclick="addItem('Wagyu Smash Burger', 19.75)">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="order-sidebar">
+      <h3 style="font-size:20px; font-weight:800;">Order Basket</h3>
+      <div id="cart-list" style="margin-top:14px; min-height:80px; color:#64748b; font-size:14px;">Your basket is empty.</div>
+      <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:18px; font-weight:900;">
+        <span>Order Total:</span>
+        <span id="cart-sum">$0.00</span>
+      </div>
+      <button class="btn-checkout" onclick="checkout()">Confirm & Dispatch Courier</button>
+
+      <div class="live-tracker" id="tracker-box">
+        <div style="color:#38bdf8; font-weight:800; font-size:15px;">🛵 Live Courier Tracking</div>
+        <div style="font-size:13px; color:#cbd5e1; margin-top:6px;" id="track-status">Kitchen preparing gourmet order...</div>
+        <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Courier: <b>Marco (Yamaha E-Bike)</b></div>
+        <div style="background:#334155; height:6px; border-radius:3px; margin-top:10px; overflow:hidden;">
+          <div style="width:70%; background:#22c55e; height:100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let cart = [];
+    function addItem(name, p) {
+      cart.push({ name, p });
+      render();
+    }
+    function render() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const list = document.getElementById('cart-list');
+      const sum = document.getElementById('cart-total');
+      if (!cart.length) { list.innerHTML = 'Your basket is empty.'; document.getElementById('cart-sum').innerText = '$0.00'; return; }
+      let total = 0;
+      list.innerHTML = cart.map(i => { total += i.p; return `<div class="order-item"><span>${i.name}</span><b>$${i.p.toFixed(2)}</b></div>`; }).join('');
+      document.getElementById('cart-sum').innerText = `$${total.toFixed(2)}`;
+    }
+    function checkout() {
+      if (!cart.length) return alert('Add items to basket first!');
+      const t = document.getElementById('tracker-box');
+      t.style.display = 'block';
+      setTimeout(() => { document.getElementById('track-status').innerText = 'Courier on road • 6 mins away'; }, 2000);
+    }
+  </script>
+</body>
+</html>
